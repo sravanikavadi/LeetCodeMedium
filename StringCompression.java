@@ -1,10 +1,15 @@
+package org.LeetCodeMedium;
+
 import java.io.*;
 import java.util.*;
 
 
 public class StringCompression {
     public static void main(String args[]) {
-        char[] chars = {'a','a','a','b','b','b','c','c','c','c','c'};
+        char[] chars = {'a', 'b', 'b'};
+                //{'a','b','b','b','b','b','b','b','b','b','b','b','b'};
+                //{'a','b','b','b'};
+                //{'a','a','a','b','b','b','c','c','c','c','c'};
        char[] result = stringCompression(chars);
         for(int i=0; i<result.length; i++) {
             System.out.println(result[i]);
@@ -12,18 +17,22 @@ public class StringCompression {
     }
 
     public static char[] stringCompression(char[] chars){
-        char temp = chars[0];
-        int count = 0;
-        for(int i=0, j=0; i<chars.length-1 && j<chars.length-1; j++){
-           if(chars[j] != temp) {
-               chars[i+1] = Integer.toString(count).charAt(0);
-               temp = chars[j];
-               chars[i+2] = temp;
-               count =0;
-            } else {
-               count++;
-           }
+        StringBuilder sb = new StringBuilder();
+        int n = chars.length;
+        for(int i=0; i<n; i++) {
+            int count = 1;
+            while (i < n - 1 && chars[i] == chars[i + 1]) {
+                count++;
+                i++;
+            }
+            sb.append(chars[i]);
+            if (count != 1) {
+                sb.append(count);
+            }
         }
+            for(int i=0; i<sb.length(); i++){
+                chars[i] = sb.charAt(i);
+            }
         return chars;
     }
 }
